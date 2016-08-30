@@ -12,7 +12,7 @@ import static kiss.API.*;
  * @author bwstevens
  */
 public class HelloWorld {
-    void untestRun(){
+    void testRun(){
         outExpect("Hello World!");
         run();
         outClose();
