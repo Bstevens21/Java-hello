@@ -19,9 +19,7 @@ public class HelloWorld {
     }
     
     void run() {
-        println("Hello World bro!");
-        
-        println("How are you?");
+        println("Hello World!");
     }
     }
 
