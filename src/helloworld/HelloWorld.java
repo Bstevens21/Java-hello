@@ -310,4 +310,8 @@ public class HelloWorld {
         
         println(hw);      
       }
+        
+        void testClock(){
+            Clock clock = test(new Clock());
+        }
     }
