@@ -11,7 +11,7 @@ import static kiss.API.*;
  *
  * @author bwstevens
  */
-public class Clock {
+public class Clock extends java.lang.Object implements Comparable<Clock> {
     
     //instance variables
     private double hours=0;
@@ -67,4 +67,38 @@ public class Clock {
         double shouldBe = 1.00 + 1.0/3600.0;
         assert abs(now-shouldBe) < 1.0/3600.0;
     }
+    //overload
+    public boolean equals(Clock clock){
+        return compareTo(clock) == 0;
+    }
+    @Override
+    public boolean equals(Object object){
+      return (object instanceof Clock) && equals((Clock) object);
+       
+    }
+    
+    //eqauls compare two objects memory adresses
+    void testEquals(){
+        Clock clock1 = new Clock();
+        Clock clock2 = clock1;
+        Clock clock3 = new Clock();
+        
+        clock1.setHours(1.00);
+        clock3.setHours(1.00);
+        assert clock1.equals(clock2) == true;
+        assert clock2.getHours() == 1.00;
+        assert (clock1 == clock2) == true;
+        assert clock1.equals(clock3) == true;
+        assert (clock1 == clock3) == false;
+    }
+
+    @Override
+    public int compareTo(Clock clock) {
+        double delta = getHours()-clock.getHours();
+        if (delta < 0) return -1;
+        if (delta == 0) return 0;
+        return 1;
+    }
+    
+    
 }

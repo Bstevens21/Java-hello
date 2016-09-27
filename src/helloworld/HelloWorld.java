@@ -315,4 +315,10 @@ public class HelloWorld {
         void testClock(){
             Clock clock = test(new Clock());
         }
+        
+        void testTimeZoneClock(){
+            TimeZoneClock tzClock = testAlways(new TimeZoneClock());
+        }
+        
+        
     }
