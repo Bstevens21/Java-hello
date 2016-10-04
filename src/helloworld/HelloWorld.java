@@ -6,7 +6,15 @@
 package helloworld;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 import static kiss.API.*;
 
 /**
@@ -361,11 +369,85 @@ public class HelloWorld {
                  }
             });
             
-            ages.sort((a,b) -> -a.compareTo(b)); //lambda (anonymous funciton)
+            ages.sort((a,b) -> { return -a.compareTo(b);}); //lambda (anonymous funciton)
                for(int age : ages){
                 println(age);
             }
         }
+       
+       void testSet(){
+        Set<String> pets = new HashSet<String>();
         
+        pets.add("fluffy");
+        pets.add("pookie");
+        pets.add("pupper");
+        pets.add("doge");
+        pets.add("pepe");
+        
+        try (Close out = outExpect("pupper",EOL,"doge",EOL,"pookie",EOL,"fluffy",EOL,"pepe",EOL)){
+        
+        for( String pet: pets) {
+            println(pet);
+         }
+        }
+       }
+       
+       void testTreeSet(){
+                Set<String> pets = new TreeSet<String>();
+        
+        pets.add("fluffy");
+        pets.add("pookie");
+        pets.add("pupper");
+        pets.add("doge");
+        pets.add("pepe");
+        
+        try (Close out = outExpect("doge",EOL,"fluffy",EOL,"pepe",EOL,"pookie",EOL,"pupper",EOL)){
+        
+        for( String pet: pets) {
+            println(pet);
+         }
+        }
+       }
+       
+       void testHashMap(){
+           Map<String, Integer> petAges = new HashMap<String, Integer>();
+           
+           petAges.put("fluffy", 7);
+           petAges.put("pookie", 2);
+           petAges.put("pupper", 100);
+           petAges.put("doge", 3);
+           petAges.put("pepe", 83);
+           
+           
+       }
+       
+       void testCollection(){
+           Collection<Integer> c = new LinkedList<Integer>();
+           c.add(3);
+           c.add(3);
+           c.add(1);
+           c.add(7);
+           c.add(2);
+           
+           assert c.contains(3) == true;
+           
+           c.remove(3);
+           
+           //assert c.contains(3) == false;
+           
+           /*try (Close out = outExpect(1,EOL,7,EOL,2,EOL)){
+           Iterator<Integer> i = c.iterator();
+           while(i.hasNext()) {
+               Integer value = i.next();
+               println(value);
+           }
+        }
+           
+           try (Close out = outExpect(1,EOL,7,EOL)){
+               for (Integer value : c){
+                   println(value);
+               }
+           } */
+     }
             
     }
