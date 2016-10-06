@@ -5,6 +5,7 @@
  */
 package helloworld;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
@@ -12,8 +13,10 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.TreeSet;
 import static kiss.API.*;
 
@@ -418,7 +421,93 @@ public class HelloWorld {
            petAges.put("doge", 3);
            petAges.put("pepe", 83);
            
+           try (Close out = outExpect("petAges[pupper]=100",EOL,"petAges[doge]=3",
+                   EOL,"petAges[pookie]=2",EOL,"petAges[fluffy]=7",EOL,"petAges[pepe]=83",EOL)) {
+           for (String key : petAges.keySet()) {
+               println("petAges[" + key + "]=" + petAges.get(key));
+           }
+           }
            
+            for (String key : petAges.keySet()) {
+               petAges.put(key,petAges.get(key)+1);
+               
+           }
+            
+            try (Close out = outExpect("petAges[pupper]=101",EOL,"petAges[doge]=4",
+                   EOL,"petAges[pookie]=3",EOL,"petAges[fluffy]=8",EOL,"petAges[pepe]=84",EOL)) {
+                 for (String key : petAges.keySet()) {
+               println("petAges[" + key + "]=" + petAges.get(key));
+           }
+          }
+       }
+       
+              void testTreeMap(){
+           Map<String, Integer> petAges = new TreeMap<String, Integer>();
+           
+           petAges.put("fluffy", 7);
+           petAges.put("pookie", 2);
+           petAges.put("pupper", 100);
+           petAges.put("doge", 3);
+           petAges.put("pepe", 83);
+           
+           try (Close out = outExpect("petAges[doge]=3",EOL,"petAges[fluffy]=7",
+                   EOL,"petAges[pepe]=83",EOL,"petAges[pookie]=2",EOL,"petAges[pupper]=100",EOL)) {
+           for (String key : petAges.keySet()) {
+               println("petAges[" + key + "]=" + petAges.get(key));
+           }
+           }
+           
+            for (String key : petAges.keySet()) {
+               petAges.put(key,petAges.get(key)+1);
+               
+           }
+            
+            try (Close out = outExpect("petAges[doge]=4",EOL,"petAges[fluffy]=8",
+                   EOL,"petAges[pepe]=84",EOL,"petAges[pookie]=3",EOL,"petAges[pupper]=101",EOL)) {
+                 for (String key : petAges.keySet()) {
+               println("petAges[" + key + "]=" + petAges.get(key));
+           }
+          }
+       }
+              
+       void doStuff() throws IOException {
+           throw new IOException("bad stuff happened");
+       };
+       void doOtherStuff() {};
+       
+       void testException(){
+           try {
+               doStuff();
+           } catch (IOException ex) {
+               
+           }
+       }      
+       
+       void testException2() throws IOException {
+           doStuff();
+       }
+       void testLinkedList(){
+           List<String> names = new LinkedList<String>();
+           
+           boolean pass = false;
+           try {
+               println(names.get(0));
+           } catch (IndexOutOfBoundsException ex) {
+              pass = true;
+           }
+           assert pass == true;
+           
+           names.add("doge");
+           names.add("fluffy");
+           names.add("pepe");
+           names.get(names.size()-1);
+           assert names.get(names.size()-1).equals("pepe");
+           
+           String[] a = new String[3];
+           a[0]="doge";
+           assert (a[0].equals("doge"));
+           assert (a[1] == null);
+           assert (a[2] == null);
        }
        
        void testCollection(){
